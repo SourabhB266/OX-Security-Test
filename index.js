@@ -22,11 +22,15 @@ function dataReturnPayloadCallback_201(oRequest, oResponse, oPayload) {
 						viewMoreOrderInFleetVehicleLink = oResponse.meta.extraAttributes.viewMoreVehicleLink;
 					} 
 					if(viewMoreOrderInFleetVehicleLink != '') {
-						viewMoreOrderInFleetVehicleLink = "volumeInventoryPurchase.html?from=View%20More&rd="+escape(viewMoreOrderInFleetVehicleLink);
+						viewMoreOrderInFleetVehicleLink = "volumeInventoryPurchase.html?from=View%20More&rd=" + encodeURIComponent(viewMoreOrderInFleetVehicleLink);
 						var viewMoreOrderInFleetVehicleLinkDiv = document.getElementById("viewMoreOrderInFleetVehicleLink");
-						var searchClickToViewMoreMsg = document.getElementById("searchClickToViewMoreMsg").value;
-						var html = "<A href=\""+viewMoreOrderInFleetVehicleLink+"\" target=\"_BLANK\">"+searchClickToViewMoreMsg+"</A>";
-						viewMoreOrderInFleetVehicleLinkDiv.innerHTML = html;
+						var searchClickToViewMoreMsg = escapeHtml(document.getElementById("searchClickToViewMoreMsg").value);
+						var anchor = document.createElement("a");
+						anchor.href = viewMoreOrderInFleetVehicleLink;
+						anchor.target = "_blank";
+						anchor.textContent = searchClickToViewMoreMsg;
+						viewMoreOrderInFleetVehicleLinkDiv.innerHTML = '';
+						viewMoreOrderInFleetVehicleLinkDiv.appendChild(anchor);
 					}
 				}
 			}
